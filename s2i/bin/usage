@@ -1,0 +1,26 @@
+#!/bin/sh
+cat <<EOF
+Aquesta es la imatge S2I nginx-centos7 S2I:
+Per utilitzarla, instal·lar S2I: https://github.com/openshift/source-to-image
+
+Aplicacio de prova:
+
+s2i build test/test-app nginx-centos7 nginx-centos7-app
+
+Podem executar la imatge resultant fent:
+docker run -d -p 8080:8080 nginx-centos7-app
+i veure el test amb http://localhost:8080
+
+Executar a openshift:
+oc new-build --name nginx-centos7 --strategy=docker \
+--code  https://github.com/mcn015/source-to-image \
+--context-dir examples/nginx-centos7
+
+oc new-app nginx-centos7~https://github.com/mcn015/source-to-image \
+--context-dir examples/nginx-centos7/test/test-app \
+--name nginx-centos7-app
+
+oc new-app nginx-centos7~https://github.com/mcn015/source-to-image \
+--context-dir examples/nginx-centos7/test/test-app-redirect \
+--name nginx-centos7-redirect
+EOF
