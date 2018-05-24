@@ -37,6 +37,7 @@ RUN chown -R 1001:1001 /var/lib/nginx
 RUN touch /run/nginx.pid
 RUN chown -R 1001:1001 /run/nginx.pid
 RUN chown -R 1001:1001 /etc/nginx
+RUN chown -R 1001:1001 /usr/libexec/s2i
 
 USER 1001
 
