@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash -e
 cat <<EOF
 Aquesta es la imatge S2I nginx-centos7 S2I:
 Per utilitzarla, instal·lar S2I: https://github.com/openshift/source-to-image

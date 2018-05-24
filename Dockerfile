@@ -20,7 +20,7 @@ LABEL io.k8s.description="Nginx Webserver" \
     io.openshift.s2i.scripts-url="image:///usr/libexec/s2i"
 
 # Install the nginx web server package
-RUN apk add --no-cache nginx
+RUN apk add --no-cache bash nginx
 
 # Change the default port for nginx
 # Required if you plan on running images as a non-root user).
@@ -37,7 +37,7 @@ RUN chown -R 1001:1001 /var/lib/nginx
 RUN touch /run/nginx.pid
 RUN chown -R 1001:1001 /run/nginx.pid
 RUN chown -R 1001:1001 /etc/nginx
-RUN chown -R 1001:1001 /usr/libexec/s2i
+# RUN chown -R 1001:1001 /usr/libexec/s2i
 
 USER 1001
 

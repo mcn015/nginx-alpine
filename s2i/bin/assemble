@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash -e
 #
 # S2I assemble script for the 'nginx-centos7' image.
 # The 'assemble' script builds your application source so that it is ready to run.
