@@ -28,9 +28,10 @@ RUN sed -i 's/^user/#user/' /etc/nginx/nginx.conf
 
 RUN apk add --no-cache bash
 
-RUN chmod -R 777 /var/cache/nginx /var/run /var/log/nginx /usr/libexec/s2i
 # Copy the S2I scripts to /usr/libexec/s2i since we set the label that way
 COPY ./s2i/bin/ /usr/libexec/s2i
+RUN chmod -R 777 /var/cache/nginx /var/run /var/log/nginx /usr/libexec/s2i
+
 # RUN chown -R 1001:1001 /usr/libexec/s2i
 # RUN chmod -R o+rwx /usr/libexec/s2i/*
 
