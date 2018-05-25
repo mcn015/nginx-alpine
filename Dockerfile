@@ -22,7 +22,7 @@ LABEL io.k8s.description="Nginx Webserver" \
 
 # Change the default port for nginx
 # Required if you plan on running images as a non-root user).
-RUN sed -i 's/listen\(.*\)80;/listen 8081;/' /etc/nginx/conf.d/default.conf
+RUN sed -i 's/listen\(.*\)80;/listen 8080;/' /etc/nginx/conf.d/default.conf
 # RUN sed -i 's/80/8080/' /etc/nginx/nginx.conf
 RUN sed -i 's/^user/#user/' /etc/nginx/nginx.conf
 
@@ -31,6 +31,7 @@ RUN apk add --no-cache bash
 # Copy the S2I scripts to /usr/libexec/s2i since we set the label that way
 COPY ./s2i/bin/ /usr/libexec/s2i
 RUN chown -R 1001:1001 /usr/libexec/s2i
+RUN chmod -R o+rwx /usr/libexec/s2i/*
 
 RUN chown -R 1001:1001 /usr/share/nginx
 RUN chown -R 1001:1001 /var/log/nginx
