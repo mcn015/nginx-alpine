@@ -22,7 +22,7 @@ LABEL io.k8s.description="Nginx Webserver" \
 
 # Change the default port for nginx
 # Required if you plan on running images as a non-root user).
-RUN sed -i 's/listen\(.*\)80;/listen 8080;/' /etc/nginx/conf.d/default.conf
+RUN sed -i 's/listen\(.*\)80;/listen 8081;/' /etc/nginx/conf.d/default.conf
 # RUN sed -i 's/80/8080/' /etc/nginx/nginx.conf
 RUN sed -i 's/^user/#user/' /etc/nginx/nginx.conf
 
