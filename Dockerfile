@@ -30,6 +30,7 @@ RUN apk add --no-cache bash
 
 # Copy the S2I scripts to /usr/libexec/s2i since we set the label that way
 COPY ./s2i/bin/ /usr/libexec/s2i
+RUN chown -R 1001:1001 /usr/libexec/s2i
 
 RUN chown -R 1001:1001 /usr/share/nginx
 RUN chown -R 1001:1001 /var/log/nginx
