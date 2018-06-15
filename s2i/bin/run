@@ -8,4 +8,5 @@
 # We will turn off daemonizing for the nginx process so that the container
 # doesn't exit after the process runs.
 
+echo "---> Starting Nginx web server..."
 exec /usr/sbin/nginx -g "daemon off;"
