@@ -1,18 +1,18 @@
 
-# nginx-centos7
+# nginx-alpine
 # Here you can use whatever base image is relevant for your application.
-FROM nginx:stable-alpine
+FROM nginx:1.14.0-alpine
 
 # Here you can specify the maintainer for the image that you're building
 LABEL maintainer="Miquel Canals <miquel.canals@uib.cat>"
 
 # Export an environment variable that provides information about the application version.
 # Replace this with the version for your application.
-ENV NGINX_VERSION=1.6.3
+ENV NGINX_VERSION=1.14.0
 
 # Set the labels that are used for OpenShift to describe the builder image.
 LABEL io.k8s.description="Nginx Webserver" \
-    io.k8s.display-name="Nginx 1.6.3" \
+    io.k8s.display-name="Nginx 1.14.0" \
     io.openshift.expose-services="8080:http" \
     io.openshift.tags="builder,webserver,html,nginx" \
     # this label tells s2i where to find its mandatory scripts
