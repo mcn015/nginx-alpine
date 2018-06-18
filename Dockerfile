@@ -19,6 +19,8 @@ LABEL io.k8s.description="Nginx Webserver" \
     # (run, assemble, save-artifacts)
     io.openshift.s2i.scripts-url="image:///usr/libexec/s2i"
 
+## create user in group root
+RUN  adduser -s /bin/sh -u 1001 -G root -H -S -D default
 
 # Change the default port for nginx
 # Required if you plan on running images as a non-root user).
@@ -35,9 +37,11 @@ RUN chmod -R 775 \
   /var/cache/nginx \
   /var/run \
   /var/log/nginx \
-  /usr/libexec/s2i
+  /usr/libexec/s2i \
+  /usr/share/nginx/* \
+  && chgrp -R root /var/cache/nginx
 
-RUN chown -R 1001:1001 \
+RUN chown -R 1001:0 \
   /var/cache/nginx \
   /var/run \
   /var/log/nginx \
