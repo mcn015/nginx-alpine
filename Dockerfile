@@ -49,18 +49,6 @@ RUN chown -R 1001:0 \
   /etc/nginx \
   /usr/share/nginx/*
 
-  # RUN chown -R 1001:1001 /usr/libexec/s2i
-  # RUN chmod -R o+rwx /usr/libexec/s2i/*
-
-#RUN chown -R 1001:1001 /usr/share/nginx
-#RUN chown -R 1001:1001 /var/log/nginx
-  # RUN chown -R 1001:1001 /var/lib/nginx
-  # RUN touch /run/nginx.pid
-  # RUN chown -R 1001:1001 /run/nginx.pid
-#RUN chown -R 1001:1001 /etc/nginx
-#RUN chown -R 1001:1001 /var/cache/nginx
-#RUN chown -R 1001:1001 /var/run
-
 
 USER 1001
 
