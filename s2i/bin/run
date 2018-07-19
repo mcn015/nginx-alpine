@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/sh -e
 # The run script executes the server that runs your application.
 #
 # For more information see the documentation:
