@@ -1,6 +1,7 @@
 # nginx running in alpine as an arbitrary user
+# S2I image, works in OpenShift 3.9
 
-FROM nginx:1.14.0-alpine
+FROM alpine:3.7
 
 LABEL io.k8s.description="S2I image for nginx in alpine linux" \
       io.k8s.display-name="Nginx 1.14" \
@@ -8,31 +9,45 @@ LABEL io.k8s.description="S2I image for nginx in alpine linux" \
       io.openshift.tags="builder,html,nginx,alpine,s2i" \
       io.openshift.s2i.scripts-url="image:///usr/libexec/s2i"
 
-# RUN apk add --no-cache bash
+# install nginx
+RUN apk add --no-cache nginx
 
 # Copy the S2I scripts to /usr/libexec/s2i which is the location set for scripts
 # as io.openshift.s2i.scripts-url label
 COPY ./s2i/bin/ /usr/libexec/s2i
 
+# Copy customized config files
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
+
 # support running as arbitrary user which belogs to the root group 
-RUN chmod -R g+rwx \
+RUN mkdir -p /var/cache/nginx && \
+    adduser -u 1001 -G root -h /var/lib/nginx -D -H -S -s/sbin/nologin 1001 && \
+    chown -R 1001:root \
+        /usr/sbin/nginx \
 	/var/cache/nginx \
 	/var/run \
 	/var/log/nginx \
 	/usr/libexec/s2i \
-	/usr/share/nginx/html/
-RUN chgrp -R root /var/cache/nginx
+	/var/tmp \
+	/var/lib/nginx && \
+    chmod -R u+x \
+	/usr/libexec/s2i  && \
+    chmod -R g=u \
+        /usr/sbin/nginx \
+	/var/cache/nginx \
+	/var/run \
+	/var/log/nginx \
+	/usr/libexec/s2i \
+	/var/tmp \
+	/var/lib/nginx
 
-# users are not allowed to listen on priviliged ports, use 8080
-RUN sed -i.bak 's/listen\(.*\)80;/listen 8080;/' /etc/nginx/conf.d/default.conf
+# RUN chgrp -R root /var/cache/nginx
 
-# comment user directive as master process is run as user in OpenShift anyhow 
-RUN sed -i.bak 's/^user/#user/' /etc/nginx/nginx.conf
-
-RUN addgroup nginx root
+# RUN addgroup nginx root
 
 EXPOSE 8080
 
-USER nginx
+USER 1001
 
 CMD [ "/usr/libexec/s2i/usage" ]
