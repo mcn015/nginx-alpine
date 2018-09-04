@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/sh -e
 #
 # S2I save-artifacts script for the 'nginx-centos7' image.
 # The save-artifacts script streams a tar archive to standard output.
